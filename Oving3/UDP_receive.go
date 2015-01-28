@@ -12,12 +12,13 @@ import (
 func main(){
 	var buff[1024]byte
 
-
+	defer sock.close()	
 
 
 	addr,err :=net.ResolveUDPAddr( "udp",":30000")
 	if err != nil{
 		fmt.Println("ResolveUDPAddr failed badly")
+		return;
 	}
 	fmt.Println("addr.IP:",addr.IP)
 	
@@ -43,13 +44,6 @@ func main(){
 	
 
 
-
-
-	
-//defer.close()	
-
-	
-	
 	
 	
 	
