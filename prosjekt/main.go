@@ -2,32 +2,25 @@ package main
 
 import(
 	"fmt"
-	 //."driver"
-	 ."elev_handler"
+	 ."driver"
+	 "timer"
 	 "time"
 )
+
+//var Number_of_floors = 4 //for å enkelt endre antall etasjer. Må også endres i driver.
+
 func main() {
 
 	timerChan := make(chan int)
-	fmt.Println("Starter timer ved tidspunkt: ", time.Now(),"\n")
-	go DoorTimer(timerChan)
-	for{
-		select{
-			case DoorTimerIsDone := <- timerChan:
-				if DoorTimerIsDone == 1{
-					fmt.Println("Timer er ferdig ved tidspunkt: ", time.Now(),"\n")
-
-				}
-			default:	//Husk å ha en default i en select/case struktur
-				time.Sleep(1*time.Second)	//Viktig å ha en sleep i en for/select struktur for å gi andre Go rutiner CPU aksess
-		}
-	}
+	initChan := make(chan bool)	//for å kalle initialiseringsrutiner i elev_controller og elev_brain
+	nextFloorChan := make(chan int)	//brukes av elev_brain til å kommunisere med/til elev_controller
+	currentFloorChan := make(chan int)	//bør kanskje være global variable, da nettverk, brain og controller trenger current_floor
+	directionChan := make(chan int)	//må finne ut om controller trenger å endre på dir, eller om bare brain trenger denne informasjone
 
 
 
 
-
-
+	
 
 
 
